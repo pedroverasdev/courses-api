@@ -15,20 +15,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.pedroveras.courses_api.exceptions.CourseFoundException;
-import br.com.pedroveras.courses_api.modules.course.dto.CreateCourseDTO;
+import br.com.pedroveras.courses_api.modules.course.application.commands.CreateCourseCommand;
 import br.com.pedroveras.courses_api.modules.course.useCases.CreateCourseUseCase;
 
 @ExtendWith(MockitoExtension.class)
 public class CreateCourseUseCaseTest {
   @Mock
   private CourseRepository courseRepository;
-
-  @Spy
-  private CourseMapper courseMapper = new CourseMapper();
 
   @InjectMocks
   private CreateCourseUseCase createCourseUseCase;
@@ -46,12 +42,14 @@ public class CreateCourseUseCaseTest {
 
     when(courseRepository.findByName(courseName)).thenReturn(Optional.of(existingCourse));
 
-    var courseDTO = new CreateCourseDTO();
-    courseDTO.setName(courseName);
-    courseDTO.setDescription("Outra descrição com tamanho suficiente");
-    courseDTO.setCategory("Backend");
+    var courseCommand = new CreateCourseCommand(
+      courseName,
+      "Outra descrição com tamanho suficiente",
+      "Backend",
+      true
+    );
 
-    assertThrows(CourseFoundException.class, () -> createCourseUseCase.execute(courseDTO));
+    assertThrows(CourseFoundException.class, () -> createCourseUseCase.execute(courseCommand));
 
     verify(courseRepository, never()).save(any());
   }
@@ -68,13 +66,16 @@ public class CreateCourseUseCaseTest {
     when(courseRepository.findByName(courseName)).thenReturn(Optional.empty());
     when(courseRepository.save(any())).thenReturn(course);
 
-    var courseDTO = new CreateCourseDTO();
-    courseDTO.setName(courseName);
-    courseDTO.setDescription("Descrição existente com mais de 10 caracteres");
-    courseDTO.setCategory("Backend");
+    var courseCommand = new CreateCourseCommand(
+      courseName,
+      "Descrição existente com mais de 10 caracteres",
+      "Backend",
+      true
+    );
 
-    var result = createCourseUseCase.execute(courseDTO);
+    var result = createCourseUseCase.execute(courseCommand);
     assertThat(result).isNotNull();
+    assertThat(result).isInstanceOf(UUID.class);
     verify(courseRepository).save(any());
   }
 }

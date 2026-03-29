@@ -1,6 +1,7 @@
 package br.com.pedroveras.courses_api.modules.course;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,24 +29,15 @@ public class DeleteCourseUseCaseTest {
     @Test
     @DisplayName("Should not be possible to delete a course if course does not found")
     public void should_not_be_delete_course_with_course_not_found() {
-        try{
-            deleteCourseUseCase.execute(null);
-        } catch (Exception e){
-            assertThat(e).isInstanceOf(CourseNotFoundException.class);
-        }
+        when(courseRepository.findById(null)).thenReturn(Optional.empty());
+        assertThrows(CourseNotFoundException.class, () -> deleteCourseUseCase.execute(null));
     }
 
     @Test
     public void should_not_be_able_to_delete_course_with_course_not_found(){
         var idCourse = UUID.randomUUID();
-        var course = new CourseEntity();
-        course.setId(idCourse);
-        when(courseRepository.findById(idCourse)).thenReturn(Optional.of(course));
-        try{
-            deleteCourseUseCase.execute(idCourse);
-        } catch (Exception e){
-            assertThat(e).isInstanceOf(CourseNotFoundException.class);
-        }
+        when(courseRepository.findById(idCourse)).thenReturn(Optional.empty());
+        assertThrows(CourseNotFoundException.class, () -> deleteCourseUseCase.execute(idCourse));
     }
 
     @Test

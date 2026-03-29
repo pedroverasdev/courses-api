@@ -1,33 +1,39 @@
 package br.com.pedroveras.courses_api.modules.course.useCases;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import br.com.pedroveras.courses_api.exceptions.CourseFoundException;
 import br.com.pedroveras.courses_api.modules.course.CourseEntity;
-import br.com.pedroveras.courses_api.modules.course.CourseMapper;
 import br.com.pedroveras.courses_api.modules.course.CourseRepository;
-import br.com.pedroveras.courses_api.modules.course.dto.CourseIdDTO;
-import br.com.pedroveras.courses_api.modules.course.dto.CreateCourseDTO;
+import br.com.pedroveras.courses_api.modules.course.CourseStatus;
+import br.com.pedroveras.courses_api.modules.course.application.commands.CreateCourseCommand;
+import br.com.pedroveras.courses_api.modules.course.application.ports.in.CreateCourseInputPort;
 
 @Service
-public class CreateCourseUseCase {
+public class CreateCourseUseCase implements CreateCourseInputPort {
     
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
-    @Autowired
-    private CourseMapper courseMapper;
+    public CreateCourseUseCase(CourseRepository courseRepository) {
+      this.courseRepository = courseRepository;
+    }
 
-    public CourseIdDTO execute(CreateCourseDTO createCourseDTO) {
-      CourseEntity courseEntity = courseMapper.toEntity(createCourseDTO);
-
-      this.courseRepository.findByName(courseEntity.getName()).ifPresent(course -> {
+    @Override
+    public UUID execute(CreateCourseCommand createCourseCommand) {
+      this.courseRepository.findByName(createCourseCommand.name()).ifPresent(course -> {
         throw new CourseFoundException();
       });
 
-      CourseEntity savedCourse = this.courseRepository.save(courseEntity);
+      CourseEntity course = CourseEntity.builder()
+        .name(createCourseCommand.name())
+        .description(createCourseCommand.description())
+        .category(createCourseCommand.category())
+        .active(Boolean.TRUE.equals(createCourseCommand.active()) ? CourseStatus.ACTIVE : CourseStatus.INACTIVE)
+        .build();
 
-      return new CourseIdDTO(savedCourse.getId());
+      CourseEntity savedCourse = this.courseRepository.save(course);
+      return savedCourse.getId();
     }
 }

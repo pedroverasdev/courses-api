@@ -1,6 +1,8 @@
 package br.com.pedroveras.courses_api.modules.course;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +21,7 @@ import br.com.pedroveras.courses_api.modules.course.useCases.DeleteCourseUseCase
 
 @ExtendWith(MockitoExtension.class)
 public class DeleteCourseUseCaseTest {
+
     @InjectMocks
     private DeleteCourseUseCase deleteCourseUseCase;
 
@@ -26,22 +29,20 @@ public class DeleteCourseUseCaseTest {
     private CourseRepository courseRepository;
 
     @Test
-    @DisplayName("Should not be possible to delete a course if course does not found")
-    public void should_not_be_delete_course_with_course_not_found() {
-        when(courseRepository.findById(null)).thenReturn(Optional.empty());
-        assertThrows(CourseNotFoundException.class, () -> deleteCourseUseCase.execute(null));
-    }
-
-    @Test
-    public void should_not_be_able_to_delete_course_with_course_not_found(){
+    @DisplayName("Should throw when course is not found and not delete anything")
+    public void should_throw_when_course_is_not_found() {
         var idCourse = UUID.randomUUID();
         when(courseRepository.findById(idCourse)).thenReturn(Optional.empty());
-        assertThrows(CourseNotFoundException.class, () -> deleteCourseUseCase.execute(idCourse));
+
+        assertThatThrownBy(() -> deleteCourseUseCase.execute(idCourse))
+            .isInstanceOf(CourseNotFoundException.class);
+
+        verify(courseRepository, never()).delete(any());
     }
 
     @Test
     @DisplayName("Should delete course when it exists")
-    public void should_be_able_to_delete_course_with_course_found() {
+    public void should_delete_course_when_it_exists() {
         var idCourse = UUID.randomUUID();
         var course = new CourseEntity();
         course.setId(idCourse);
@@ -49,6 +50,7 @@ public class DeleteCourseUseCaseTest {
 
         deleteCourseUseCase.execute(idCourse);
 
+        verify(courseRepository).findById(idCourse);
         verify(courseRepository).delete(course);
     }
 }

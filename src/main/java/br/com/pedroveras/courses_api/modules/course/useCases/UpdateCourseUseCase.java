@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import br.com.pedroveras.courses_api.exceptions.CourseFoundException;
 import br.com.pedroveras.courses_api.exceptions.CourseNotFoundException;
 import br.com.pedroveras.courses_api.modules.course.CourseEntity;
 import br.com.pedroveras.courses_api.modules.course.CourseRepository;
@@ -24,17 +25,14 @@ public class UpdateCourseUseCase implements UpdateCourseInputPort {
             .orElseThrow(CourseNotFoundException::new);
 
         if (updateCourseCommand.name() != null) {
-            course.setName(updateCourseCommand.name());
+            courseRepository.findByName(updateCourseCommand.name())
+                .filter(other -> !other.getId().equals(courseId))
+                .ifPresent(other -> {
+                    throw new CourseFoundException();
+                });
         }
 
-        if (updateCourseCommand.description() != null) {
-            course.setDescription(updateCourseCommand.description());
-        }
-
-        if (updateCourseCommand.category() != null) {
-            course.setCategory(updateCourseCommand.category());
-        }
-
+        course.apply(updateCourseCommand);
         this.courseRepository.save(course);
     }
 }

@@ -3,6 +3,7 @@ package br.com.pedroveras.courses_api.modules.course;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import br.com.pedroveras.courses_api.modules.course.application.commands.UpdateCourseCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,5 +30,17 @@ public class CourseEntity {
 
   public void toggleStatus() {
     this.active = this.active.toggle();
+  }
+
+  public void apply(UpdateCourseCommand command) {
+    if (command.name() != null) {
+      this.name = command.name();
+    }
+    if (command.description() != null) {
+      this.description = command.description();
+    }
+    if (command.category() != null) {
+      this.category = command.category();
+    }
   }
 }

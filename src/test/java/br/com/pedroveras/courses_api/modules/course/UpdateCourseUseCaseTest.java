@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import br.com.pedroveras.courses_api.exceptions.CourseFoundException;
 import br.com.pedroveras.courses_api.exceptions.CourseNotFoundException;
 import br.com.pedroveras.courses_api.modules.course.application.commands.UpdateCourseCommand;
-import br.com.pedroveras.courses_api.modules.course.useCases.UpdateCourseUseCase;
+import br.com.pedroveras.courses_api.modules.course.application.useCases.UpdateCourseUseCase;
 
 @ExtendWith(MockitoExtension.class)
 public class UpdateCourseUseCaseTest {

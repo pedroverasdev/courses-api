@@ -1,4 +1,4 @@
-package br.com.pedroveras.courses_api.modules.course.useCases;
+package br.com.pedroveras.courses_api.modules.course.application.useCases;
 
 import java.util.UUID;
 

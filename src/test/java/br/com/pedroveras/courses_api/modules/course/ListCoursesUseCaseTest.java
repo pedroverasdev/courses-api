@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.pedroveras.courses_api.modules.course.useCases.ListCoursesUseCase;
+import br.com.pedroveras.courses_api.modules.course.application.useCases.ListCoursesUseCase;
 
 @ExtendWith(MockitoExtension.class)
 public class ListCoursesUseCaseTest {

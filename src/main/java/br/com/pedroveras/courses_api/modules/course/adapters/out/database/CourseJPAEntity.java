@@ -1,4 +1,4 @@
-package br.com.pedroveras.courses_api.modules.course;
+package br.com.pedroveras.courses_api.modules.course.adapters.out.database;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

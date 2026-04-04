@@ -2,8 +2,10 @@ package br.com.pedroveras.courses_api.modules.course;
 
 import org.springframework.stereotype.Component;
 
-import br.com.pedroveras.courses_api.modules.course.application.commands.CreateCourseCommand;
-import br.com.pedroveras.courses_api.modules.course.application.commands.UpdateCourseCommand;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseStatus;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CreateCourseCommand;
+import br.com.pedroveras.courses_api.modules.course.application.domain.UpdateCourseCommand;
 import br.com.pedroveras.courses_api.modules.course.dto.CreateCourseDTO;
 import br.com.pedroveras.courses_api.modules.course.dto.ListCourseDTO;
 import br.com.pedroveras.courses_api.modules.course.dto.UpdateCourseDTO;

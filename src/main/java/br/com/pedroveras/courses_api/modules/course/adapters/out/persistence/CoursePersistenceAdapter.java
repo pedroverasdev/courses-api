@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import br.com.pedroveras.courses_api.modules.course.CourseEntity;
 import br.com.pedroveras.courses_api.modules.course.CourseRepository;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
 
 @Component
 public class CoursePersistenceAdapter implements CourseRepository {

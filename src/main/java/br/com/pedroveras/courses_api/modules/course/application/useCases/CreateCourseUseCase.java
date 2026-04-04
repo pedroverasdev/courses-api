@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.pedroveras.courses_api.exceptions.CourseFoundException;
 import br.com.pedroveras.courses_api.modules.course.CourseRepository;
-import br.com.pedroveras.courses_api.modules.course.CourseStatus;
 import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseStatus;
 import br.com.pedroveras.courses_api.modules.course.application.domain.CreateCourseCommand;
 import br.com.pedroveras.courses_api.modules.course.application.ports.in.CreateCourseInputPort;
 

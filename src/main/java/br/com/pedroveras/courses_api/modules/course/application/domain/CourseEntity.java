@@ -3,8 +3,6 @@ package br.com.pedroveras.courses_api.modules.course.application.domain;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import br.com.pedroveras.courses_api.modules.course.CourseStatus;
-import br.com.pedroveras.courses_api.modules.course.application.commands.UpdateCourseCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

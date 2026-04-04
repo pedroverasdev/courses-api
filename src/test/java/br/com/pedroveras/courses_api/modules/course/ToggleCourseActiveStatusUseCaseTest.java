@@ -19,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.pedroveras.courses_api.exceptions.CourseNotFoundException;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseStatus;
 import br.com.pedroveras.courses_api.modules.course.application.useCases.ToggleCourseActiveStatusUseCase;
 
 @ExtendWith(MockitoExtension.class)

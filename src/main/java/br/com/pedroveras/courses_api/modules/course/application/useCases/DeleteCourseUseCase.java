@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import br.com.pedroveras.courses_api.exceptions.CourseNotFoundException;
-import br.com.pedroveras.courses_api.modules.course.CourseEntity;
 import br.com.pedroveras.courses_api.modules.course.CourseRepository;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
 import br.com.pedroveras.courses_api.modules.course.application.ports.in.DeleteCourseInputPort;
 
 @Service

@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.pedroveras.courses_api.modules.course.CourseJPAEntity;
+import br.com.pedroveras.courses_api.modules.course.adapters.out.database.CourseJPAEntity;
+
 
 public interface SpringDataCourseRepository extends JpaRepository<CourseJPAEntity, UUID> {
     Optional<CourseJPAEntity> findByName(String name);

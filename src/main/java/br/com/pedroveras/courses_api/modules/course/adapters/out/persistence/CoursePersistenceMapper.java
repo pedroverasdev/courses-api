@@ -2,8 +2,8 @@ package br.com.pedroveras.courses_api.modules.course.adapters.out.persistence;
 
 import org.springframework.stereotype.Component;
 
-import br.com.pedroveras.courses_api.modules.course.CourseEntity;
-import br.com.pedroveras.courses_api.modules.course.CourseJPAEntity;
+import br.com.pedroveras.courses_api.modules.course.application.domain.CourseEntity;
+import br.com.pedroveras.courses_api.modules.course.adapters.out.database.CourseJPAEntity;
 
 @Component
 public class CoursePersistenceMapper {

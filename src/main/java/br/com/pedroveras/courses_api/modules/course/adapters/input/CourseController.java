@@ -1,4 +1,4 @@
-package br.com.pedroveras.courses_api.modules.course.controllers;
+package br.com.pedroveras.courses_api.modules.course.adapters.input;
 
 import java.util.UUID;
 
